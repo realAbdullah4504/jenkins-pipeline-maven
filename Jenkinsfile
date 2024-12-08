@@ -20,26 +20,27 @@ pipeline {
                     }
                 
             }
-        }
-        stage('test'){
-            parallel {
-                stage ('test A')
-                {
-                    steps{
-                        echo 'this is test A'
+            stage('test'){
+                parallel {
+                    stage ('test A')
+                    {
+                        steps{
+                            echo 'this is test A'
+                        }
+                    }
+                    stage ('test B')
+                    {
+                        steps{
+                            echo 'this is test B'
+                        }
                     }
                 }
-                stage ('test B')
-                {
-                    steps{
-                        echo 'this is test B'
-                    }
+                post {
+                    success {
+                        archiveArtifacts artifacts: '**/target/*.war'
+                        }
                 }
             }
-            post {
-                success {
-                    archiveArtifacts artifacts: '**/target/*.war'
-                    }
-            }
         }
+        
     }
