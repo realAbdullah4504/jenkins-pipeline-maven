@@ -3,19 +3,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'Building the app..'
+        sh 'maven clean package'
         }
-      }
-    stage('Test') {
-      steps {
-        echo 'Testing..'
-        }
-      }
-    stage('Deploy'){
-      steps {
-        echo 'Deploying..'
+        post {
+          success {
+            archiveArtifacts artifacts: '*.jar', fingerprint: true
+            }
+          }
       }
     }
-  }
-
 }
