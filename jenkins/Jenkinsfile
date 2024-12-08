@@ -2,6 +2,7 @@ pipeline {
   agent { label 'agent' }
   tools {
     maven 'maven'
+    jdk 'jdk'
   }
   stages {
     stage('Build') {
