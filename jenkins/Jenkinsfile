@@ -2,18 +2,17 @@ pipeline {
   agent { label 'agent' }
   tools {
     maven 'maven'
-    jdk 'jdk'
   }
   stages {
     stage('Build') {
       steps {
         sh 'mvn clean package'
-        }
-        post {
-          success {
-            archiveArtifacts artifacts: '*.jar', fingerprint: true
-            }
-          }
       }
     }
+  }
+  post {
+    success {
+      archiveArtifacts artifacts: '*.jar', fingerprint: true
+    }
+  }
 }
