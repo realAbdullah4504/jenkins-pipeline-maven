@@ -61,6 +61,7 @@ pipeline {
                 cd /var/www/html/
                 jar -xvf webapp.war
                 """
+                }
             }
         }
     }    
