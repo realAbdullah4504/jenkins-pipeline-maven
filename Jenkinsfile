@@ -21,10 +21,10 @@ pipeline {
                 
         }
         stage('test'){
+            agent { label 'agent' }
             parallel {
                 stage ('test A')
                 {
-                    agent { label 'agent' }
                     steps{
                         echo 'this is test A'
                         sh "mvn test"
@@ -32,7 +32,6 @@ pipeline {
                 }
                 stage ('test B')
                 {
-                    agent { label 'agent' }
                     steps{
                         echo 'this is test B'
                         sh "mvn test"
@@ -40,7 +39,6 @@ pipeline {
                 }
             }
             post {
-                agent { label 'agent' }
                 success {
                     // archiveArtifacts artifacts: '**/target/*.war'
                     dir("webapp/target/")
