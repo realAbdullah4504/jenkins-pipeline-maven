@@ -24,7 +24,6 @@ pipeline {
             }   
         }
         stage('test'){
-            agent { label "agent" }  // Test on dev agent
             parallel {
                 stage ('test A') {
                     agent { label "agent" }
