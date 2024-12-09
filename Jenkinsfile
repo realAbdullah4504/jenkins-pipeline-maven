@@ -17,6 +17,9 @@ pipeline {
                 sh 'mvn clean package -DskipTests=true'
                 echo "hello $NAME ${params.LASTNAME}"
                 }
+                script {
+                    file = load 'script.groovy'
+                }
                 
         }
         stage('test'){
@@ -61,6 +64,26 @@ pipeline {
                 cd /var/www/html/
                 jar -xvf webapp.war
                 """
+            }
+        }
+        stage('deploy_prod')
+        {
+            when {
+                expression { params.ENV == 'prod' }
+                beforeAgent true
+            }
+            steps {
+                timeout(time: 5, unit: 'Days') {
+                    input message: 'Deployment approved?', ok: 'Deploy'
+
+                dir("/var/www/html") {
+                    unstash 'war'
+                    sh """
+                    cd /var/www/html/
+                    jar -xvf webapp.war
+                    """
+                    sh "pwd"
+                }
             }
         }
     }    
