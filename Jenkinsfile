@@ -13,6 +13,7 @@ pipeline {
     stages {
         stage('build')
         {
+            agent { label 'agent' }
             steps {
                 sh 'mvn clean package -DskipTests=true'
                 echo "hello $NAME ${params.LASTNAME}"
