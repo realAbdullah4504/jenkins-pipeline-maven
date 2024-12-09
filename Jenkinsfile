@@ -49,7 +49,18 @@ pipeline {
         stage('deploy_dev')
         {
             steps {
-                echo "deploying to dev"
+                when {
+                    expression { params.ENV == 'dev' } 
+                    beforeAgent true
+                }
+                steps {
+                    dir("/var/www/html") {
+                        unstash 'war'
+                    }
+                sh """
+                cd /var/www/html/
+                jar -xvf webapp.war
+                """
             }
         }
     }    
