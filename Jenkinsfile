@@ -75,15 +75,14 @@ pipeline {
             steps {
                 timeout(time: 5, unit: 'DAYS') {
                     input message: 'Deployment approved?'
-
-                dir("/var/www/html") {
-                    unstash 'war'
+                    dir("/var/www/html") {
+                        unstash 'war'
+                    }
                     sh """
                     cd /var/www/html/
                     jar -xvf webapp.war
                     """
                     sh "pwd"
-                }
                 }
             }
         }
