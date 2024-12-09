@@ -43,9 +43,10 @@ pipeline {
                 success {
                     // archiveArtifacts artifacts: '**/target/*.war'
                     node('agent')
-                    dir("webapp/target/")
-                    {
+                    script{
+                        dir("webapp/target/") {
                         stash name: 'war', includes: '*.war'
+                        }
                     }
                 }
             }
