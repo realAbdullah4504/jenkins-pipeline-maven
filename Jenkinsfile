@@ -74,7 +74,7 @@ pipeline {
             }
             steps {
                 timeout(time: 5, unit: 'DAYS') {
-                    input message: 'Deployment approved?', ok: 'Deploy'
+                    input message: 'Deployment approved?'
 
                 dir("/var/www/html") {
                     unstash 'war'
