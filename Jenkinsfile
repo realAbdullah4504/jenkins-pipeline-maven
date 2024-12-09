@@ -48,12 +48,11 @@ pipeline {
         }
         stage('deploy_dev')
         {
+            when {
+                expression { params.ENV == 'dev' } 
+                beforeAgent true
+            }
             steps {
-                when {
-                    expression { params.ENV == 'dev' } 
-                    beforeAgent true
-                }
-                steps {
                     dir("/var/www/html") {
                         unstash 'war'
                     }
@@ -61,7 +60,6 @@ pipeline {
                 cd /var/www/html/
                 jar -xvf webapp.war
                 """
-                }
             }
         }
     }    
