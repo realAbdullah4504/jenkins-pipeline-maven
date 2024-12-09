@@ -52,15 +52,9 @@ pipeline {
         }
         stage('deploy_dev')
         {
-            when {
-                expression {
-                    return params.ENV == 'dev'
-                    }
-                    steps {
-                        echo "deploying to dev"
-                        sh "hostname -i"
-                    }
-                }
+            steps {
+                echo "deploying to dev"
+            }
         }
     }    
 }
