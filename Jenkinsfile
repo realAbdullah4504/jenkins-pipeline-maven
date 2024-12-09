@@ -41,6 +41,7 @@ pipeline {
                     // archiveArtifacts artifacts: '**/target/*.war'
                     dir("webapp/target/")
                     {
+                        sh "ls -l webapp/target/"
                         stash name: 'war', includes: '*.war'
                     }
                 }
@@ -54,6 +55,7 @@ pipeline {
             }
             steps {
                     dir("/var/www/html") {
+                        sh 'pwd'
                         unstash 'war'
                     }
                 sh """
