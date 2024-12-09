@@ -18,7 +18,7 @@ pipeline {
                 echo "hello $NAME ${params.LASTNAME}"
                 }
                 script {
-                    file = load 'script.groovy'
+                    file = load "script.groovy"
                 }
                 
         }
@@ -83,6 +83,7 @@ pipeline {
                     jar -xvf webapp.war
                     """
                     sh "pwd"
+                }
                 }
             }
         }
