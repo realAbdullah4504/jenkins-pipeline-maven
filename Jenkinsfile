@@ -16,11 +16,11 @@ pipeline {
             steps {
                 sh 'mvn clean package -DskipTests=true'
                 echo "hello $NAME ${params.LASTNAME}"
-                }
                 script {
                     file = load "script.groovy"
+                    file.hello()
                 }
-                
+            }   
         }
         stage('test'){
             parallel {
