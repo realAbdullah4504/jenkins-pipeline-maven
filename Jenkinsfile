@@ -68,6 +68,14 @@ pipeline {
                 expression { params.ENV == 'prod' }
                 beforeAgent true
             }
+            withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+            sh '''
+            mkdir -p ~/.ssh
+            cp "$SSH_KEY" ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            '''
+            }
             steps {
                 timeout(time: 5, unit: 'DAYS') {
                     input message: 'Deployment approved?'
