@@ -42,6 +42,7 @@ pipeline {
             post {
                 success {
                     // archiveArtifacts artifacts: '**/target/*.war'
+                    node('agent')
                     dir("webapp/target/")
                     {
                         stash name: 'war', includes: '*.war'
