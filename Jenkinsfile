@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent { label "agent"}
     tools {
         maven 'maven'
     }
@@ -13,7 +13,6 @@ pipeline {
     stages {
         stage('build')
         {
-            agent { label 'agent' }
             steps {
                 sh 'mvn clean package -DskipTests=true'
                 echo "hello $NAME ${params.LASTNAME}"
@@ -24,7 +23,6 @@ pipeline {
             parallel {
                 stage ('test A')
                 {
-                    agent { label 'agent' }
                     steps{
                         echo 'this is test A'
                         sh "mvn test"
@@ -32,7 +30,6 @@ pipeline {
                 }
                 stage ('test B')
                 {
-                    agent { label 'agent' }
                     steps{
                         echo 'this is test B'
                         sh "mvn test"
@@ -42,18 +39,15 @@ pipeline {
             post {
                 success {
                     // archiveArtifacts artifacts: '**/target/*.war'
-                    node('agent')
-                    script{
-                        dir("webapp/target/") {
+                    dir("webapp/target/")
+                    {
                         stash name: 'war', includes: '*.war'
-                        }
                     }
                 }
             }
         }
         stage('deploy_dev')
         {
-            agent { label 'agent' }
             steps {
                 echo "deploying to dev"
             }
