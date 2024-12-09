@@ -2,10 +2,6 @@ pipeline {
     agent {
         label 'agent'
     }
-    // choice parameters
-    parameters {
-        choice choices: ['dev','prod'],description: 'choose env',name: 'ENV'
-    }
     tools {
         maven 'maven'
     }
@@ -14,6 +10,7 @@ pipeline {
     }
     parameters {
         string defaultValue:'javed',name:'LASTNAME'
+        choice choices: ['dev','prod'],description: 'choose env',name: 'ENV'
     }
     stages {
         stage('build')
