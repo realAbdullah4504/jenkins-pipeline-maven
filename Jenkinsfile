@@ -51,6 +51,7 @@ pipeline {
         }
         stage('deploy_dev')
         {
+            agent { label 'agent' }
             steps {
                 echo "deploying to dev"
             }
