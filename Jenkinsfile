@@ -1,5 +1,5 @@
 pipeline {
-    agent none  // Don't specify global agent, we'll specify per stage
+    agent { label 'agent' }
     
     tools {
         maven 'maven'
@@ -13,7 +13,6 @@ pipeline {
     }
     stages {
         stage('build') {
-            agent { label "agent" }  // Build on dev agent
             steps {
                 sh 'mvn clean package -DskipTests=true'
                 echo "hello $NAME ${params.LASTNAME}"
@@ -26,14 +25,13 @@ pipeline {
         stage('test'){
             parallel {
                 stage ('test A') {
-                    agent { label "agent" }
                     steps{
                         echo 'this is test A'
                         sh "mvn test"
                     }
                 }
                 stage ('test B') {
-                    agent { label "agent" }
+                
                     steps{
                         echo 'this is test B'
                         sh "mvn test"
@@ -42,17 +40,14 @@ pipeline {
             }
             post {
                 success {
-                    node('agent') {
-                        dir("webapp/target/") {
-                            sh "pwd"
-                            stash name: 'war', includes: '*.war'
-                        }
+                    dir("webapp/target/") {
+                        sh "pwd"
+                        stash name: 'war', includes: '*.war'
                     }
                 }
             }
         }
         stage('deploy_dev') {
-            agent { label "agent" }  // Deploy on dev agent
             when {
                 expression { params.ENV == 'dev' } 
                 beforeAgent true
