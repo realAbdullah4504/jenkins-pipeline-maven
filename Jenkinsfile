@@ -42,10 +42,11 @@ pipeline {
             }
             post {
                 success {
-                    agent { label "agent" }
-                    dir("webapp/target/") {
-                        sh "pwd"
-                        stash name: 'war', includes: '*.war'
+                    node('agent') {
+                        dir("webapp/target/") {
+                            sh "pwd"
+                            stash name: 'war', includes: '*.war'
+                        }
                     }
                 }
             }
