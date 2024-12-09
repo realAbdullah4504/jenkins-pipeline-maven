@@ -40,6 +40,7 @@ pipeline {
                 }
             }
             post {
+                agent { label 'agent' }
                 success {
                     // archiveArtifacts artifacts: '**/target/*.war'
                     dir("webapp/target/")
