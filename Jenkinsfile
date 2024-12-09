@@ -73,7 +73,7 @@ pipeline {
                 beforeAgent true
             }
             steps {
-                timeout(time: 5, unit: 'Days') {
+                timeout(time: 5, unit: 'DAYS') {
                     input message: 'Deployment approved?', ok: 'Deploy'
 
                 dir("/var/www/html") {
