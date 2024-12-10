@@ -71,12 +71,14 @@ pipeline {
             
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins', keyFileVariable: 'SSH_KEY')]) {
-            sh '''
-            mkdir -p ~/.ssh
-            cp "$SSH_KEY" ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
-            '''
+                sh '''
+                mkdir -p ~/.ssh
+                cp "$SSH_KEY" ~/.ssh/id_rsa
+                chmod 600 ~/.ssh/id_rsa
+                ssh-keyscan github.com >> ~/.ssh/known_hosts
+                sudo chown -R ubuntu:ubuntu /var/www/html
+                chmod -R 755 /var/www/html
+                '''
             }
                 timeout(time: 5, unit: 'DAYS') {
                     input message: 'Deployment approved?'
