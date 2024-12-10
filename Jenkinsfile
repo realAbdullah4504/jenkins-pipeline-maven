@@ -97,6 +97,7 @@ pipeline {
                         whoami
                         echo "**********************************"
                         jar -xvf webapp.war
+                        sudo systemctl restart apache2
                         """
                     }
                 }
