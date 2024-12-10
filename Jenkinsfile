@@ -91,7 +91,6 @@ pipeline {
                         unstash 'war'
                         sh """
                         jar -xvf webapp.war
-                        rm webapp.war
                         """
                     }
                 }
