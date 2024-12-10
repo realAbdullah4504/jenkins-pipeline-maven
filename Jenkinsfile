@@ -76,8 +76,13 @@ pipeline {
                 cp "$SSH_KEY" ~/.ssh/id_rsa
                 chmod 600 ~/.ssh/id_rsa
                 ssh-keyscan github.com >> ~/.ssh/known_hosts
+                sudo mkdir -p /var/www/html
                 sudo chown -R ubuntu:ubuntu /var/www/html
-                chmod -R 755 /var/www/html
+                sudo chmod -R 755 /var/www/html
+                sudo echo "<IfModule dir_module>
+                DirectoryIndex index.html index.jsp
+                </IfModule>
+                " | sudo tee -a /etc/apache2/apache2.conf
                 '''
             }
                 timeout(time: 5, unit: 'DAYS') {
