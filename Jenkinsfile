@@ -57,6 +57,8 @@ pipeline {
                     unstash 'war'
                 }
                 sh """
+                whoami
+                echo "**********************************"
                 cd /var/www/html/
                 jar -xvf webapp.war
                 """
@@ -72,6 +74,8 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins', keyFileVariable: 'SSH_KEY')]) {
                 sh '''
+                whoami
+                echo "**********************************"
                 mkdir -p ~/.ssh
                 cp "$SSH_KEY" ~/.ssh/id_rsa
                 chmod 600 ~/.ssh/id_rsa
@@ -90,6 +94,8 @@ pipeline {
                     dir("/var/www/html") {
                         unstash 'war'
                         sh """
+                        whoami
+                        echo "**********************************"
                         jar -xvf webapp.war
                         """
                     }
