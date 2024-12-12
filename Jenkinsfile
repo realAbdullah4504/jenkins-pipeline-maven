@@ -75,7 +75,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins', keyFileVariable: 'SSH_KEY')]) {
                 sh '''
                 whoami
-                echo "**********************************"
+                echo "********************************"
                 mkdir -p ~/.ssh
                 cp "$SSH_KEY" ~/.ssh/id_rsa
                 chmod 600 ~/.ssh/id_rsa
